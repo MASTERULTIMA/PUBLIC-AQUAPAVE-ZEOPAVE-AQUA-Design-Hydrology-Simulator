@@ -7,6 +7,8 @@ AQUAPAVE menyajikan hasil pengujian laboratorium penelitian ini, menghitung
 neraca dan skenario di atasnya, dan **menyatakan status bukti setiap angka yang
 ditampilkannya**.
 
+https://github.com/user-attachments/assets/4096eee9-fa14-4cef-ace0-5ea55d0c8553
+
 ---
 
 ## Yang dilakukan aplikasi ini
