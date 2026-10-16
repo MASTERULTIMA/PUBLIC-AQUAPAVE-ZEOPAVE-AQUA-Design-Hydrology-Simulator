@@ -32,6 +32,7 @@ from ui.tabs import mix_design as tab_mix_design
 from ui.tabs import mulai as tab_mulai
 from ui.tabs import permeabilitas as tab_permeabilitas
 from ui.tabs import retensi_air as tab_retensi_air
+from ui.tabs import substitusi as tab_substitusi
 
 # ─── Konfigurasi Halaman ────────────────────────────────────────────────────────
 st.set_page_config(
@@ -91,6 +92,7 @@ AIR_TERTAHAN_AKTIF = HASIL_SKENARIO_AKTIF[OutputID.RUNOFF]
 tabs = st.tabs([
     "Mulai di Sini",
     "Kalkulator Mix Design",
+    "Eksplorasi Kadar Substitusi",
     "Permeabilitas",
     "Kuat Tekan",
     "Retensi Air",
@@ -116,44 +118,51 @@ with tabs[1]:
 
 
 # ════════════════════════════════════════════════════════════════════════════════
-# TAB 2 — PERMEABILITAS   (badan tab: ui/tabs/permeabilitas.py)
+# TAB EKSPLORASI KADAR SUBSTITUSI   (badan tab: ui/tabs/substitusi.py)
 # ════════════════════════════════════════════════════════════════════════════════
 with tabs[2]:
+    tab_substitusi.render(st, _sk.co2_per_ton_semen, _sk.co2_per_ton_ipal)
+
+
+# ════════════════════════════════════════════════════════════════════════════════
+# TAB 2 — PERMEABILITAS   (badan tab: ui/tabs/permeabilitas.py)
+# ════════════════════════════════════════════════════════════════════════════════
+with tabs[3]:
     tab_permeabilitas.render(st)
 
 
 # ════════════════════════════════════════════════════════════════════════════════
 # TAB 3 — KUAT TEKAN   (badan tab: ui/tabs/kuat_tekan.py)
 # ════════════════════════════════════════════════════════════════════════════════
-with tabs[3]:
+with tabs[4]:
     tab_kuat_tekan.render(st, KUAT_TEKAN_AKTIF, target_fc_val)
 
 
 # ════════════════════════════════════════════════════════════════════════════════
 # TAB 4 — RETENSI AIR   (badan tab: ui/tabs/retensi_air.py)
 # ════════════════════════════════════════════════════════════════════════════════
-with tabs[4]:
+with tabs[5]:
     tab_retensi_air.render(st, RETENSI_AKTIF, area_m2, intensitas_hujan)
 
 
 # ════════════════════════════════════════════════════════════════════════════════
 # TAB 5 — EMISI CO₂   (badan tab: ui/tabs/emisi_co2.py)
 # ════════════════════════════════════════════════════════════════════════════════
-with tabs[5]:
+with tabs[6]:
     tab_emisi_co2.render(st, HASIL_CO2)
 
 
 # ════════════════════════════════════════════════════════════════════════════════
 # TAB 6 — DASBOR PERBANDINGAN   (badan tab: ui/tabs/dasbor.py)
 # ════════════════════════════════════════════════════════════════════════════════
-with tabs[6]:
+with tabs[7]:
     tab_dasbor.render(st, RETENSI_AKTIF, AIR_TERTAHAN_AKTIF)
 
 
 # ════════════════════════════════════════════════════════════════════════════════
 # TAB 7 — EFISIENSI BIAYA   (badan tab: ui/tabs/biaya.py)
 # ════════════════════════════════════════════════════════════════════════════════
-with tabs[7]:
+with tabs[8]:
     tab_biaya.render(st, area_m2)
 
 

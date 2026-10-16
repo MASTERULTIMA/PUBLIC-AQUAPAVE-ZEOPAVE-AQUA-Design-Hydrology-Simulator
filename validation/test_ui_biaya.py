@@ -208,9 +208,9 @@ class TabHidup(unittest.TestCase):
     def test_aplikasi_tanpa_kegagalan(self):
         self.assertEqual(list(self.at.exception), [])
 
-    def test_delapan_tab_masih_ada(self):
-        """Tab pembuka Mulai di Sini ditambah tujuh tab teknis."""
-        self.assertEqual(len(self.at.tabs), 8)
+    def test_sembilan_tab_masih_ada(self):
+        """Tab pembuka Mulai di Sini ditambah delapan tab teknis."""
+        self.assertEqual(len(self.at.tabs), 9)
 
     def test_tab_digambar(self):
         self.assertIn("Estimasi Biaya Pembuatan ZEOPAVE-AQUA", seluruh_teks(self.at))

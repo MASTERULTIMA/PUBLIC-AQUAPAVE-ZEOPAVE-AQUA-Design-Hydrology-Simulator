@@ -586,6 +586,8 @@ PENUNJUK_TAB = (
     ("Kalkulator Mix Design",
      "Berapa kilogram semen, lumpur IPAL, batu sirtu, dan air untuk volume "
      "adukan tertentu."),
+    ("Eksplorasi Kadar Substitusi",
+     "Perbandingan kadar lumpur IPAL 0% sampai 25%, dan mengapa 15% dipilih."),
     ("Permeabilitas",
      "Seberapa cepat air menembus beton poros, dihitung dari data uji."),
     ("Kuat Tekan",

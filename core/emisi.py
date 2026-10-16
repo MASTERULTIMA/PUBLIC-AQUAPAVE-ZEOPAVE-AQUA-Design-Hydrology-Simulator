@@ -95,6 +95,26 @@ def tren_substitusi(
     ]
 
 
+def reduksi_per_kadar(
+    kadar_persen,
+    co2_per_ton_semen: float,
+    co2_per_ton_ipal: float,
+) -> list[tuple[float, float]]:
+    """
+    Pasangan (substitusi %, pengurangan CO2 %) terhadap campuran 100% semen.
+
+    Persentasenya tidak bergantung pada jumlah pengikat, jadi dihitung untuk
+    1 ton pengikat.
+
+    >>> [(p, round(r, 1)) for p, r in reduksi_per_kadar([0, 15], 0.85, 0.05)]
+    [(0.0, 0.0), (15.0, 14.1)]
+    """
+    return [
+        (float(p), neraca(1.0, p, co2_per_ton_semen, co2_per_ton_ipal)["reduksi_persen"])
+        for p in kadar_persen
+    ]
+
+
 def rentang_faktor_emisi_semen() -> dict:
     """Rentang faktor emisi semen yang disitir naskah."""
     return {

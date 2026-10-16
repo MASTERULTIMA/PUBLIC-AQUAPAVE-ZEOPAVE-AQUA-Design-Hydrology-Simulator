@@ -160,9 +160,9 @@ class MuatAplikasi(unittest.TestCase):
             + "; ".join(str(e.value) for e in self.at.exception),
         )
 
-    def test_delapan_tab_ada(self):
-        """Tab pembuka Mulai di Sini ditambah tujuh tab teknis."""
-        self.assertEqual(len(self.at.tabs), 8)
+    def test_sembilan_tab_ada(self):
+        """Tab pembuka Mulai di Sini ditambah delapan tab teknis."""
+        self.assertEqual(len(self.at.tabs), 9)
 
     def test_acuan_penelitian_yang_aktif_di_awal(self):
         k = koleksi(self.at)

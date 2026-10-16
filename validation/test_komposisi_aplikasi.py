@@ -35,10 +35,10 @@ BERKAS_APLIKASI = os.path.join(AKAR, "AQUAPAVE.py")
 DIR_UI = os.path.join(AKAR, "ui")
 TENGGAT = 60
 
-MODUL_TAB = ("mulai", "permeabilitas", "kuat_tekan", "retensi_air",
+MODUL_TAB = ("mulai", "substitusi", "permeabilitas", "kuat_tekan", "retensi_air",
              "emisi_co2", "dasbor", "biaya", "mix_design")
 
-#: Satu tab pembuka (Mulai di Sini) ditambah tujuh tab teknis.
+#: Satu tab pembuka (Mulai di Sini) ditambah delapan tab teknis.
 JUMLAH_TAB = len(MODUL_TAB)
 
 
@@ -105,7 +105,7 @@ class AplikasiTersusun(unittest.TestCase):
     def test_tanpa_kegagalan(self):
         self.assertEqual(list(self.at.exception), [])
 
-    def test_delapan_tab(self):
+    def test_sembilan_tab(self):
         self.assertEqual(len(self.at.tabs), JUMLAH_TAB)
 
     def test_tab_pembuka_di_urutan_pertama(self):
