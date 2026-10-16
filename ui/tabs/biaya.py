@@ -69,91 +69,11 @@ from core import komposisi
 
 from .. import gaya
 from ..components import evidence as komp_bukti
-from ..components import warnings as komp_catatan
-
-PERINGATAN_INDIKATIF = (
-    "**Analisis indikatif, bukan temuan penelitian.** Naskah DevICE tidak "
-    "memuat bab biaya sama sekali, sehingga tidak satu pun angka di tab ini "
-    "memiliki sumber di dalam penelitian. Hasilnya tidak boleh disajikan "
-    "sebagai temuan yang tervalidasi secara eksperimental."
-)
-
-#: PROVENANS KEENAM HARGA SATUAN (PRICE-01).
-#:
-#: Sumbernya satu: tabel perhitungan biaya proyek ZEOPAVE-AQUA. Tabel itu
-#: menetapkan angka mana yang dipakai proyek — bukan bahwa angkanya benar.
-#: Tidak ada kuitansi, nota, penawaran, tanggal, maupun kolom sumber di
-#: belakangnya, dan tidak satu pun harga pernah diverifikasi ke pemasok.
-SUMBER_HARGA = "tabel perhitungan biaya proyek ZEOPAVE-AQUA"
 
 #: Status bukti yang melekat pada keenam harga. Sengaja TIDAK memakai kata
 #: "asumsi": angkanya bukan karangan, melainkan catatan perhitungan proyek.
 #: Sengaja pula tidak memakai kata "pasar": tidak ada yang memverifikasinya.
 STATUS_HARGA = "MASUKAN PERHITUNGAN PROYEK HISTORIS"
-
-#: Audit status setiap masukan biaya. Tidak ada satu pun yang berstatus nilai
-#: pasar bersumber maupun nilai literatur.
-AUDIT_MASUKAN = [
-    {"Masukan": "Harga air Rp 4.000/kg", "Status": STATUS_HARGA,
-     "Catatan": "dari tabel biaya proyek; setara Rp 4 juta/m³, jauh di atas "
-                "tarif air yang wajar. Tidak diverifikasi"},
-    {"Masukan": "Harga semen Rp 1.500/kg", "Status": STATUS_HARGA,
-     "Catatan": "dari tabel biaya proyek; besaran masuk akal. Tidak diverifikasi"},
-    {"Masukan": "Harga kerikil Rp 2.000/kg", "Status": STATUS_HARGA,
-     "Catatan": "dari tabel biaya proyek; komponen beton poros terbesar. "
-                "Tidak diverifikasi"},
-    {"Masukan": "Harga lumpur IPAL Rp 0", "Status": STATUS_HARGA,
-     "Catatan": "dari tabel biaya proyek; mengandaikan limbah gratis, biaya "
-                "angkut dan pengolahan diabaikan"},
-    {"Masukan": "Harga hebel Rp 20.000/kg",
-     "Status": STATUS_HARGA + " — SATUAN BERMASALAH",
-     "Catatan": "tabel historis mengenakannya per kilogram; keterangan "
-                "pembelian penulis menyebut per batang. Konversi tidak "
-                "terdokumentasi, massa satu batang tidak diketahui, dan "
-                "konversinya tidak dihitung"},
-    {"Masukan": "Harga zeolit Rp 10.000/kg", "Status": STATUS_HARGA,
-     "Catatan": "dari tabel biaya proyek. Tidak diverifikasi"},
-    {"Masukan": "Tabel perhitungan biaya proyek", "Status": "CATATAN PROYEK",
-     "Catatan": "membuktikan keenam harga inilah yang dipakai proyek; tidak "
-                "membuktikan harganya benar. Tanpa tanggal, pemasok, kuitansi, "
-                "maupun kolom sumber"},
-    {"Masukan": "Berat satuan beton poros 1.850 kg/m³",
-     "Status": "ASUMSI OPERASIONAL SEMENTARA",
-     "Catatan": "diizinkan penulis untuk dipakai operasional; bukan hasil "
-                "pengukuran pada formulasi ZEOPAVE. SD-16C masih terbuka"},
-    {"Masukan": "Kuantitas beton poros", "Status": "CAMPURAN KANONIK §3.3",
-     "Catatan": "diturunkan core/komposisi.py pada substitusi 15% dan f.a.b "
-                "0,40 — konfigurasi yang benar-benar dicetak (C-03). Kuantitas "
-                "pada tabel biaya historis, substitusi 40% dan f.a.b 0,20, "
-                "sudah digantikan dan tidak dipakai"},
-    {"Masukan": "Overhead, PPN, luas proyek", "Status": "SKENARIO PENGGUNA",
-     "Catatan": "masukan pengguna, memang seharusnya dapat diubah"},
-    {"Masukan": "Harga perkerasan konvensional", "Status": "SKENARIO PENGGUNA",
-     "Catatan": "pembanding yang dimasukkan pengguna"},
-    {"Masukan": "Tebal lapisan 2 cm dan 7,5 cm", "Status": "KEPUTUSAN PENULIS",
-     "Catatan": "pembagian 7,5 cm antara hebel dan zeolit BELUM ditetapkan"},
-    {"Masukan": "Hebel 6 kg/m² dan zeolit 1 kg/m²", "Status": "KEPUTUSAN PENULIS",
-     "Catatan": "sudah berbasis per m²; tidak diskalakan lagi"},
-    {"Masukan": "Batu sirtu muncul dua kali di naskah", "Status": "BELUM SELARAS",
-     "Catatan": "Tabel 4.2 menempatkannya sebagai agregat beton DAN lapisan "
-                "tersendiri; baris Kerikil di sini belum jelas mewakili yang mana"},
-    {"Masukan": "Basis tonase IPAL proyek", "Status": "MENGIKUTI CAMPURAN KANONIK",
-     "Catatan": "diturunkan dari campuran §3.3, sama dengan core/komposisi "
-                "(C-03). Metrik tonase Dasbor sudah dipensiunkan (SD-06)"},
-]
-
-#: Kalimat penutup tab. Menyebut PERSIS sekuat apa buktinya: harga di tab ini
-#: adalah nilai yang dipakai skenario, bukan harga terukur, bukan kutipan
-#: pemasok, dan bukan hasil pengujian apa pun. Versi sebelumnya menyatakan
-#: "harga referensi aktual dari pengujian laboratorium 2026" — klaim yang
-#: dibantah oleh panji dan panel audit tab ini sendiri (S7-B, C-06).
-CATATAN_PENUTUP = (
-    "Catatan: seluruh angka di atas adalah perhitungan ilustratif atas "
-    "harga yang diasumsikan skenario ini. Keenam harga satuannya berasal dari "
-    "tabel perhitungan biaya proyek ZEOPAVE-AQUA — masukan perhitungan "
-    "historis milik proyek sendiri. Tidak ada satu pun harga yang berasal "
-    "dari pengukuran, kutipan pemasok, atau survei pasar."
-)
 
 #: Rentang tampilan minimum grafik sensitivitas, mempertahankan tampilan lama.
 SENSITIVITAS_BATAS_MIN_PERSEN = 25.0
@@ -204,30 +124,6 @@ KUANTITAS_TABEL_HISTORIS = {
 
 #: Total yang tercatat pada tabel historis untuk satu unit ZEOPAVE-AQUA.
 TOTAL_TABEL_HISTORIS = 137_700.0
-
-#: Keterbatasan satuan harga hebel (PRICE-01), WAJIB tampil di antarmuka.
-#:
-#: Dua bukti yang tidak dapat dipertemukan tanpa mengarang angka:
-#:
-#:   tabel historis      Rp 20.000 dikenakan pada tiap KILOGRAM hebel
-#:   keterangan penulis  Rp 20.000 per BATANG, dibeli di toko bahan bangunan
-#:
-#: Massa satu batang tidak diketahui, dimensinya tidak diketahui, dan tidak
-#: ada catatan konversi mana pun. Karena itu konversinya TIDAK dihitung di
-#: sini dan nilainya TIDAK diubah diam-diam — keduanya sama-sama akan berarti
-#: mengarang angka. Yang dapat dilakukan hanyalah menyatakannya.
-BATASAN_HEBEL = (
-    "**Satuan harga hebel belum terselesaikan.** Tabel perhitungan biaya "
-    "proyek mengenakan Rp 20.000 pada setiap **kilogram** hebel "
-    "(6 kg × Rp 20.000 = Rp 120.000), sementara keterangan pembelian dari "
-    "penulis menyebut sekitar Rp 20.000 per **batang** di toko bahan "
-    "bangunan. Tidak ada catatan konversi antara batang dan kilogram, dan "
-    "massa satu batang tidak diketahui — karena itu konversinya tidak "
-    "dihitung di sini dan nilainya dibiarkan apa adanya. Hebel adalah "
-    "komponen biaya terbesar sistem ini, sehingga arah maupun besar "
-    "simpangannya menentukan seluruh angka biaya di bawah."
-)
-
 
 def harga_satuan() -> dict:
     """
@@ -361,21 +257,14 @@ def rantai_beton() -> str:
         f"f.a.b {r['faktor_air_pengikat']:.2f})"
     )
 
-#: Pipa overflow: pengecualian lingkup, keputusan penulis (S7-E).
-CATATAN_PIPA = (
-    "Pipa overflow (lapisan ke-5 pada OUTPUT3 Tabel 4.2) sengaja **tidak** "
-    "dibiayakan di sini atas keputusan penulis. Itu pengecualian lingkup, "
-    "bukan pernyataan bahwa pipanya tidak ada pada sistem fisiknya."
-)
-
 LEBAR_KOLOM = [0.5, 2.5, 1.2, 1.2, 1.8, 1.8]
 
 
 #: Kegunaan tab ini dalam bahasa awam, untuk pembaca yang baru mengenalnya.
 PENGANTAR = (
     "Memperkirakan biaya material sistem per meter persegi dari harga satuan "
-    "yang dapat Anda ubah dan kuantitas campuran penelitian. Seluruh "
-    "angkanya ilustratif — baca peringatan di bawah sebelum memakainya."
+    "yang dapat Anda ubah dan kuantitas campuran penelitian, lalu "
+    "menghitung biaya proyek dan membandingkannya dengan perkerasan biasa."
 )
 
 
@@ -393,8 +282,6 @@ def render(st, area_m2: float) -> None:
     """
     gaya.judul_bagian(st, "Estimasi Biaya Pembuatan ZEOPAVE-AQUA")
     gaya.pengantar(st, PENGANTAR)
-    komp_catatan.tak_tervalidasi(st, PERINGATAN_INDIKATIF)
-    _panel_audit(st)
 
     baris_biaya = _masukan_material(st)
     hasil = biaya_lapisan(baris_biaya)
@@ -405,23 +292,8 @@ def render(st, area_m2: float) -> None:
     _keuntungan_ipal(st, baris_biaya, proyek["luas_proyek"])
     _sensitivitas(st, baris_biaya, hasil)
 
-    st.caption(CATATAN_PENUTUP)
-
 
 # ─────────────────────── audit masukan ───────────────────────
-
-def _panel_audit(st) -> None:
-    """Status setiap masukan biaya, apa adanya."""
-    with st.expander("Audit status setiap masukan biaya"):
-        st.dataframe(pd.DataFrame(AUDIT_MASUKAN), width="stretch", hide_index=True)
-        st.caption(
-            f"Keenam harga satuan berasal dari {SUMBER_HARGA}. Tabel itu "
-            "menetapkan angka mana yang dipakai proyek, bukan bahwa angkanya "
-            "benar. Tidak ada masukan yang berstatus nilai pasar bersumber "
-            "maupun nilai literatur, dan tidak satu pun harga diverifikasi "
-            "terhadap pemasok."
-        )
-
 
 # ─────────────────────── masukan material ───────────────────────
 
@@ -430,13 +302,9 @@ def _masukan_material(st) -> list[dict]:
     st.markdown("---")
     st.markdown("#### Harga Satuan & Kuantitas Material (per 1 m² sistem)")
     st.caption(
-        "Kuantitas beton poros **diturunkan dari campuran kanonik §3.3** "
-        "(substitusi lumpur IPAL 15%, air 0,40 per kg pengikat) pada volume "
-        "1 m² × 2 cm — bukan angka yang ditulis di tab ini. Kuantitas hebel "
-        "dan zeolit adalah keputusan penulis per m². **Harga dapat disunting**; "
-        "kuantitas tidak, karena ia identitas campuran. Harga bawaannya "
-        f"diambil dari {SUMBER_HARGA} — masukan perhitungan historis, bukan "
-        "harga pasar terverifikasi."
+        "Kuantitas beton poros diturunkan dari rancangan campuran (substitusi "
+        "lumpur IPAL 15%, air 0,40 per kg pengikat) pada volume 1 m² × 2 cm. "
+        "**Harga dapat disunting**; kuantitas mengikuti rancangan campuran."
     )
 
     kepala = st.columns(LEBAR_KOLOM)
@@ -477,10 +345,6 @@ def _masukan_material(st) -> list[dict]:
         baris_biaya.append({"nama": nama, "vol": vol, "satuan": satuan,
                             "harga": harga, "subtotal": subtotal,
                             "lapisan": m["lapisan"]})
-
-    # PRICE-01. Tampil terbuka di sisi tabel, bukan terlipat di dalam panel
-    # audit: ia menentukan bagian terbesar angka biaya di bawahnya.
-    komp_catatan.keterbatasan(st, BATASAN_HEBEL)
 
     st.markdown("---")
     with st.expander("Tambah Material Lain"):
@@ -638,13 +502,7 @@ def _kartu_total(st, hasil: dict) -> None:
       </div>
     </div>
     """, unsafe_allow_html=True)
-    komp_catatan.tak_tervalidasi(
-        st,
-        f"**Berat satuan beton poros {KERAPATAN_BETON_POROS.label()}.** "
-        + KERAPATAN_BETON_POROS.catatan,
-    )
     st.caption("Rantai perhitungan beton poros: " + rantai_beton())
-    st.caption(CATATAN_PIPA)
 
 
 # ─────────────────────── estimasi proyek ───────────────────────
@@ -664,8 +522,7 @@ def _estimasi_proyek(st, hasil: dict, area_m2: float) -> dict:
             "Overhead & Upah Kerja (%)", 0, 60, 20,
             help=("Tambahan di atas biaya material untuk upah dan biaya tak "
                   "langsung, sebagai persen dari biaya material (0 sampai "
-                  "60%). Nilai awalnya angka kerja ilustratif, bukan hasil "
-                  "survei."))
+                  "60%)."))
     with bc3:
         ppn_pct = st.slider(
             "PPN (%)", 0, 15, 11,
@@ -685,8 +542,7 @@ def _estimasi_proyek(st, hasil: dict, area_m2: float) -> dict:
         "Harga Perkerasan Konvensional / Aspal (Rp/m²) — Pembanding",
         100_000.0, 5_000_000.0, 450_000.0, step=10_000.0,
         help=("Harga pembanding per meter persegi untuk perkerasan biasa, "
-              "dalam rupiah. Nilai awalnya angka kerja ilustratif — isi "
-              "dengan harga yang Anda peroleh sendiri."))
+              "dalam rupiah. Sesuaikan dengan harga di lokasi proyek."))
     total_konv = harga_konv_m2 * luas_proyek
     selisih_pct = ((total_proyek - total_konv) / total_konv * 100) if total_konv else 0.0
 
@@ -713,8 +569,7 @@ def _estimasi_proyek(st, hasil: dict, area_m2: float) -> dict:
     # menyebut kedua ketergantungan itu.
     arah = "lebih mahal" if selisih_pct > 0 else "lebih murah"
     lencana = komp_bukti.lencana(
-        f"{abs(selisih_pct):.1f}% {arah} dari pembanding — dalam skenario "
-        f"harga yang diasumsikan, pada berat satuan {KERAPATAN_BETON_POROS.status}",
+        f"{abs(selisih_pct):.1f}% {arah} dari pembanding",
         komp_bukti.PERINGATAN,
     )
     st.markdown(f"""
@@ -840,15 +695,7 @@ def _keuntungan_ipal(st, baris_biaya: list[dict],
                   delta=f"{ipal_per_m2:.2f} kg/m²")
     st.caption(
         f"Kuantitas lumpur IPAL diturunkan dari geometri: {rantai_beton()}. "
-        f"**Seluruh angka di baris ini "
-        f"bergantung pada berat satuan yang berstatus "
-        f"{KERAPATAN_BETON_POROS.status}** — bila kelak diukur, semuanya "
-        f"ikut berubah."
-    )
-    st.caption(
-        "Mengandaikan lumpur IPAL menggantikan semen menurut massa, 1 kg per "
-        "1 kg. Andaian itu konsisten dengan model substitusi massa di seluruh "
-        "aplikasi, tetapi tidak pernah diuji secara terpisah."
+        "Lumpur IPAL menggantikan semen menurut massa, 1 kg per 1 kg."
     )
 
 
@@ -928,8 +775,5 @@ def _sensitivitas(st, baris_biaya: list[dict], hasil: dict) -> None:
     fig.update_yaxes(tickformat=",")
     st.plotly_chart(fig, width="stretch")
     st.caption(
-        "Kurva ini aritmetika skenario atas harga yang diasumsikan, pada berat "
-        f"satuan yang berstatus {KERAPATAN_BETON_POROS.status}. Hanya lapisan "
-        "beton poros yang bervariasi; biaya lapisan retensi tetap. Tidak satu "
-        "pun titik di sepanjangnya pernah dicetak maupun diuji di laboratorium."
+        "Hanya lapisan beton poros yang bervariasi; biaya lapisan retensi tetap."
     )

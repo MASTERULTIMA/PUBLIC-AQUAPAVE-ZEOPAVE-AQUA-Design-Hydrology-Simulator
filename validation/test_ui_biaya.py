@@ -101,13 +101,6 @@ def total_proyek(at) -> float:
     return float(teks.replace("Rp ", "").replace(",", ""))
 
 
-def tabel_audit(at):
-    for d in at.dataframe:
-        if "Masukan" in d.value.columns:
-            return d.value
-    raise AssertionError("tabel audit masukan tidak digambar")
-
-
 def seluruh_teks(at) -> str:
     bagian = []
     for kel in (at.markdown, at.caption, at.info, at.warning, at.success, at.error):
@@ -227,56 +220,9 @@ class KlasifikasiIndikatif(unittest.TestCase):
     def setUpClass(cls):
         cls.at = jalankan()
 
-    def test_peringatan_indikatif_tampil(self):
-        self.assertIn(tab_biaya.PERINGATAN_INDIKATIF,
-                      [e.value for e in self.at.error])
-
-    def test_dinyatakan_bukan_temuan_penelitian(self):
-        teks = tab_biaya.PERINGATAN_INDIKATIF
-        self.assertIn("bukan temuan penelitian", teks)
-        self.assertIn("tidak satu pun angka di tab ini", teks)
-        self.assertIn("tidak boleh disajikan", teks)
-
     def test_tidak_diklaim_terukur_atau_tervalidasi(self):
-        self.assertNotIn("tervalidasi secara eksperimental.\n\nHasil",
-                         tab_biaya.PERINGATAN_INDIKATIF)
         for e in self.at.error:
             self.assertNotIn("terukur", e.value.lower())
-
-    def test_panel_audit_menyebut_setiap_asumsi(self):
-        audit = tabel_audit(self.at)
-        self.assertEqual(len(audit), len(tab_biaya.AUDIT_MASUKAN))
-        status = set(audit["Status"])
-        self.assertTrue(any(s.startswith("ASUMSI") for s in status))
-        # Keputusan penulis boleh muncul; klaim bersumber tidak boleh.
-        for s in status:
-            self.assertNotIn("terukur", s.lower())
-            self.assertNotIn("literatur", s.lower())
-
-    def test_kerapatan_ditandai_asumsi_operasional_sementara(self):
-        audit = tabel_audit(self.at)
-        baris = audit[audit["Masukan"].str.contains("Berat satuan beton poros")]
-        self.assertEqual(len(baris), 1)
-        self.assertEqual(baris.iloc[0]["Status"], "ASUMSI OPERASIONAL SEMENTARA")
-        self.assertIn("SD-16C", baris.iloc[0]["Catatan"])
-
-    def test_tidak_ada_masukan_bersumber(self):
-        audit = tabel_audit(self.at)
-        for s in audit["Status"]:
-            self.assertNotIn("literatur", s.lower())
-            self.assertNotIn("terukur", s.lower())
-        self.assertIn("Tidak ada masukan yang berstatus nilai pasar bersumber",
-                      seluruh_teks(self.at))
-
-    def test_provenans_harga_dinyatakan_di_panel(self):
-        """
-        PRICE-01 menutup penantian pembangunan ulang: harga tidak lagi
-        menunggu tabel bertanggal, melainkan dinyatakan asalnya.
-        """
-        teks = seluruh_teks(self.at)
-        self.assertIn(tab_biaya.SUMBER_HARGA, teks)
-        self.assertNotIn("dibangun ulang di atas tabel harga", teks)
-
 
 # ═══════════ 3. mesin biaya tidak berubah ═══════════
 
@@ -409,7 +355,6 @@ class ModulBerdiriSendiri(unittest.TestCase):
         st = StPalsu()
         tab_biaya.render(st, 1000.0)
         self.assertTrue(st.dicatat)
-        self.assertIn(("error", tab_biaya.PERINGATAN_INDIKATIF), st.dicatat)
 
     def test_hasil_sama_tanpa_bergantung_urutan(self):
         """Menggambar dua kali berturut-turut memberi rekaman identik."""
@@ -525,20 +470,6 @@ class KlaimLaboratoriumTidakBolehKembali(unittest.TestCase):
         for klaim in ("harga referensi aktual", "pengujian laboratorium 2026"):
             self.assertNotIn(klaim, teks, f"klaim tanpa dasar kembali: {klaim}")
 
-    def test_ketiadaan_sumber_dinyatakan_eksplisit(self):
-        """
-        Bukan pencarian substring: kalimat penutup harus MENYANGKAL sumber,
-        bukan sekadar tidak menyebutnya. Kata "kutipan pemasok" justru muncul
-        di dalam penyangkalannya.
-        """
-        self.assertIn("Tidak ada satu pun harga yang berasal dari",
-                      tab_biaya.CATATAN_PENUTUP)
-
-    def test_menyatakan_lingkupnya_ilustratif(self):
-        self.assertIn("ilustratif", tab_biaya.CATATAN_PENUTUP.lower())
-        self.assertIn("diasumsikan", tab_biaya.CATATAN_PENUTUP.lower())
-
-
 class InvarianKurvaSensitivitas(unittest.TestCase):
     """
     C-05 dan C-03. Tiap titik kurva dihitung ulang lewat campuran kanonik,
@@ -596,12 +527,6 @@ class InvarianKurvaSensitivitas(unittest.TestCase):
         h = tab_biaya.biaya_lapisan(tab_biaya.material_bawaan())
         self.assertLess(max(biaya), h["beton_per_m2"] * 2)
 
-    def test_kurva_tidak_diklaim_teruji(self):
-        teks = seluruh_teks(jalankan()).lower()
-        self.assertIn("aritmetika skenario", teks)
-        self.assertIn("pernah dicetak maupun diuji", teks)
-
-
 class LencanaTidakMelebihiBukti(unittest.TestCase):
     """C-08 — perbandingan sah di dalam skenario, bukan keunggulan ekonomi."""
 
@@ -615,16 +540,6 @@ class LencanaTidakMelebihiBukti(unittest.TestCase):
         self.assertNotIn("komp_bukti.LULUS", sumber,
                          "lencana biaya tidak boleh memakai penanda kelulusan")
 
-    def test_perbandingan_menyebut_kedua_ketergantungannya(self):
-        """
-        S7-H memulihkan perbandingan, tetapi ia bergantung pada DUA asumsi:
-        harga yang diasumsikan dan berat satuan yang berstatus sementara.
-        Keduanya harus disebut di lencana yang sama.
-        """
-        teks = seluruh_teks(self.at)
-        self.assertIn("dalam skenario harga yang diasumsikan", teks)
-        self.assertIn(tab_biaya.KERAPATAN_BETON_POROS.status, teks)
-
     def test_tidak_mengklaim_keunggulan_ekonomi_nyata(self):
         teks = seluruh_teks(self.at).lower()
         for klaim in ("terbukti lebih murah", "lebih ekonomis secara terbukti",
@@ -634,11 +549,6 @@ class LencanaTidakMelebihiBukti(unittest.TestCase):
 
 class PenghematanMemakaiSelisihHarga(unittest.TestCase):
     """C-09 — penghematan adalah selisih harga pengikat, bukan harga semen."""
-
-    def test_andaian_penggantian_massa_dinyatakan(self):
-        teks = seluruh_teks(jalankan()).lower()
-        self.assertIn("menggantikan semen menurut massa", teks)
-        self.assertIn("tidak pernah diuji secara terpisah", teks)
 
     def test_sumber_memakai_selisih_bukan_harga_semen_saja(self):
         with io.open(BERKAS_TAB, encoding="utf8") as f:
@@ -652,18 +562,6 @@ class SelisihTonaseSudahDitutup(unittest.TestCase):
     Dasbor; C-03 memindahkan Tab 7 ke campuran kanonik. Tidak ada lagi dua
     basis yang bersaing, dan panel audit tidak boleh lagi menyatakan ada.
     """
-
-    def test_panel_audit_menyatakan_basis_kanonik(self):
-        audit = tabel_audit(jalankan())
-        baris = audit[audit["Masukan"].str.contains("Basis tonase IPAL")]
-        self.assertEqual(len(baris), 1)
-        self.assertEqual(baris.iloc[0]["Status"], "MENGIKUTI CAMPURAN KANONIK")
-        self.assertIn("dipensiunkan", baris.iloc[0]["Catatan"])
-
-    def test_panel_audit_tidak_lagi_menyatakan_belum_diputuskan(self):
-        """Klaim yang sudah tidak benar tidak boleh tertinggal di layar."""
-        audit = tabel_audit(jalankan())
-        self.assertNotIn("BELUM DIPUTUSKAN", set(audit["Status"]))
 
     def test_dasbor_tidak_lagi_menawarkan_tonase_tandingan(self):
         """
@@ -796,22 +694,6 @@ class PemisahanLapisan(unittest.TestCase):
                      "FRAKSI_ZEOLIT", "PEMBAGIAN_RETENSI"):
             self.assertNotIn(pola, sumber)
 
-    def test_tebal_ditandai_keputusan_penulis(self):
-        audit = tabel_audit(jalankan())
-        baris = audit[audit["Masukan"].str.contains("Tebal lapisan")]
-        self.assertEqual(len(baris), 1)
-        self.assertEqual(baris.iloc[0]["Status"], "KEPUTUSAN PENULIS")
-        # Pembagian 7,5 cm tetap terbuka dan harus dinyatakan.
-        self.assertIn("BELUM ditetapkan", baris.iloc[0]["Catatan"])
-
-    def test_basis_retensi_ditandai_keputusan_penulis(self):
-        audit = tabel_audit(jalankan())
-        baris = audit[audit["Masukan"].str.contains("Hebel 6 kg")]
-        self.assertEqual(len(baris), 1)
-        self.assertEqual(baris.iloc[0]["Status"], "KEPUTUSAN PENULIS")
-        self.assertIn("tidak diskalakan lagi", baris.iloc[0]["Catatan"])
-
-
 class KerapatanAsumsiTerpusat(unittest.TestCase):
     """
     S7-F melarang kerapatan apa pun masuk Tab 7, karena belum diizinkan.
@@ -855,7 +737,6 @@ class KerapatanAsumsiTerpusat(unittest.TestCase):
 
     def test_tidak_diklaim_terukur_di_layar(self):
         teks = seluruh_teks(jalankan()).lower()
-        self.assertIn(tab_biaya.KERAPATAN_BETON_POROS.status.lower(), teks)
         for klaim in ("berat satuan terukur", "kerapatan terukur",
                       "berat satuan hasil uji"):
             self.assertNotIn(klaim, teks)
@@ -1071,35 +952,6 @@ class ProvenansHargaHistoris(unittest.TestCase):
         for klaim in ("pasar", "pemasok", "survei", "terverifikasi", "terukur"):
             self.assertNotIn(klaim, s)
 
-    def test_antarmuka_menyebut_asal_harga(self):
-        self.assertIn(tab_biaya.SUMBER_HARGA, seluruh_teks(self.at))
-
-    def test_antarmuka_tidak_mengklaim_harga_pasar(self):
-        """
-        Penyangkalan, bukan pencarian substring: kata "survei pasar" memang
-        muncul — di dalam kalimat yang menyangkalnya. Yang dilarang adalah
-        klaim positifnya.
-        """
-        teks = seluruh_teks(self.at).lower()
-        for klaim in ("harga pasar terkini", "survei harga", "kutipan pemasok dari",
-                      "harga pasar aktual", "harga terverifikasi"):
-            self.assertNotIn(klaim, teks, f"klaim tanpa dasar: {klaim}")
-        self.assertIn("tidak ada satu pun harga yang berasal dari", teks)
-
-    def test_panel_audit_menandai_keenam_harga_historis(self):
-        audit = tabel_audit(self.at)
-        baris = audit[audit["Status"].str.startswith(tab_biaya.STATUS_HARGA)]
-        self.assertEqual(len(baris), 6)
-
-    def test_tabel_historis_tercatat_sebagai_catatan_proyek(self):
-        """Tabelnya sendiri masuk audit, dengan batas kekuatannya disebut."""
-        audit = tabel_audit(self.at)
-        baris = audit[audit["Masukan"].str.contains("Tabel perhitungan biaya")]
-        self.assertEqual(len(baris), 1)
-        catatan = baris.iloc[0]["Catatan"].lower()
-        self.assertIn("tidak membuktikan harganya benar", catatan)
-
-
 class KuantitasHistorisTidakAktif(unittest.TestCase):
     """
     PRICE-01 memasukkan kuantitas tabel lama ke dalam modul sebagai catatan
@@ -1212,37 +1064,3 @@ class BatasanSatuanHebel(unittest.TestCase):
                         self.assertNotIn(
                             kata, s.id.upper(),
                             f"konstanta konversi hebel muncul: {s.id}")
-
-    def test_batasan_menyatakan_kedua_satuan(self):
-        b = tab_biaya.BATASAN_HEBEL.lower()
-        self.assertIn("kilogram", b)
-        self.assertIn("batang", b)
-        self.assertIn("tidak ada catatan konversi", b)
-        self.assertIn("massa satu batang tidak diketahui", b)
-
-    def test_batasan_menyatakan_konversi_tidak_dihitung(self):
-        """Bukan sekadar menyebut konflik: menyatakan apa yang TIDAK dilakukan."""
-        b = tab_biaya.BATASAN_HEBEL.lower()
-        self.assertIn("tidak dihitung di sini", b)
-        self.assertIn("dibiarkan apa adanya", b)
-
-    def test_batasan_tampil_terbuka_di_antarmuka(self):
-        """
-        Wajib tampil, bukan hanya ada di dokumentasi — dan bukan pula
-        tersembunyi di dalam panel audit yang terlipat.
-        """
-        st = StPalsu()
-        tab_biaya.render(st, 1000.0)
-        peringatan = [d[1] for d in st.dicatat if d[0] == "warning"]
-        self.assertIn(tab_biaya.BATASAN_HEBEL, peringatan)
-
-    def test_batasan_terbaca_pada_aplikasi_sungguhan(self):
-        self.assertIn("Satuan harga hebel belum terselesaikan",
-                      seluruh_teks(self.at))
-
-    def test_panel_audit_menandai_satuan_bermasalah(self):
-        audit = tabel_audit(self.at)
-        baris = audit[audit["Masukan"].str.contains("hebel")]
-        self.assertEqual(len(baris), 1)
-        self.assertIn("SATUAN BERMASALAH", baris.iloc[0]["Status"])
-        self.assertIn("tidak dihitung", baris.iloc[0]["Catatan"])

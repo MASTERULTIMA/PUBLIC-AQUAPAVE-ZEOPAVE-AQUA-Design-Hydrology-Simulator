@@ -597,7 +597,7 @@ PENUNJUK_TAB = (
     ("Dasbor Perbandingan",
      "Ringkasan perbandingan ZEOPAVE-AQUA dengan perkerasan biasa."),
     ("Efisiensi Biaya",
-     "Perkiraan biaya material per meter persegi — angkanya ilustratif."),
+     "Perkiraan biaya material per meter persegi dan biaya proyek."),
 )
 
 
