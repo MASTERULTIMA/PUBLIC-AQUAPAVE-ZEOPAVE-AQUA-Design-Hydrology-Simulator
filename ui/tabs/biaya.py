@@ -222,7 +222,7 @@ KERAPATAN_BETON_POROS = AsumsiOperasional(
     status="asumsi operasional sementara",
     catatan=(
         "Diizinkan penulis untuk dipakai operasional, bukan hasil pengukuran "
-        "pada formulasi beton poros ZEOPAVE. Naskah tidak menyebut berat "
+        "pada formulasi beton poros ZEOPAVE. Hasil Uji tidak menyebut berat "
         "satuan. Seluruh kuantitas dan biaya beton poros per m² bergantung "
         "pada angka ini; bila kelak diukur, semuanya ikut berubah."
     ),

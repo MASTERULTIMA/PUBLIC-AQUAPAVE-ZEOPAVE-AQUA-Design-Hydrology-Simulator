@@ -162,7 +162,7 @@ def rancangan_campuran(
         tersirat = berat_satuan_tersirat_benda_uji()
         asumsi.append(
             f"Berat satuan {BERAT_SATUAN_ASUMSI:.0f} kg/m³ adalah ASUMSI — tidak "
-            f"disebut naskah. Massa benda uji justru menyiratkan sekitar "
+            f"disebut Hasil Uji. Massa benda uji justru menyiratkan sekitar "
             f"{tersirat['berat_satuan_kg_m3']:.0f} kg/m³."
         )
     if abs(sub - SUBSTITUSI_ACUAN) > 1e-9:
@@ -214,7 +214,7 @@ def rancangan_campuran(
         "asumsi": asumsi,
         "catatan_agregat": (
             "Agregat adalah batu sirtu 4,75–12,5 mm. Hebel dan zeolit adalah "
-            "media retensi pada lapisan terpisah (OUTPUT3 Tabel 4.2), bukan "
+            "media retensi pada lapisan terpisah (Hasil Uji), bukan "
             "bagian campuran beton."
         ),
     }

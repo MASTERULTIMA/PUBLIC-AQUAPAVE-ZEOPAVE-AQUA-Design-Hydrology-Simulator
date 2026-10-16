@@ -78,5 +78,5 @@ def ambang_lalu_lintas_ringan() -> dict:
     return {
         "nilai": 5.0,
         "satuan": "MPa",
-        "sumber": "Govedarica et al. (2022) via OUTPUT3 §2.2",
+        "sumber": "Govedarica et al. (2022)",
     }

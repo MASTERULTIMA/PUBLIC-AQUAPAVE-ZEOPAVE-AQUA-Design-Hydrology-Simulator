@@ -117,12 +117,11 @@ def daftar_percobaan(
     luas = float(akses.nilai("SKALA_LUAS_ACUAN"))
     intensitas = float(akses.nilai("SKALA_INTENSITAS_ACUAN"))
     durasi = float(hidrologi.ACUAN_DURASI_JAM)
-    sumber = akses.besaran("SKALA_LUAS_ACUAN").sumber
     return (
         Percobaan(
-            "naskah", "Skenario naskah penelitian",
-            f"Titik awal yang disarankan. Luas, derasnya hujan, dan lama "
-            f"hujan sama dengan contoh pada naskah penelitian ({sumber}).",
+            "naskah", "Skenario Hasil Uji",
+            "Titik awal yang disarankan. Luas, derasnya hujan, dan lama "
+            "hujan sama dengan contoh pada Hasil Uji.",
             luas, intensitas, durasi,
         ),
         Percobaan(
@@ -231,7 +230,7 @@ def _sambutan(st) -> None:
 def _model(st, retensi_aktif: Keluaran, hasil: dict | None) -> None:
     st.caption(
         "Beginilah susunan ZEOPAVE-AQUA dari permukaan sampai ke bawah, "
-        "mengikuti ilustrasi dan Tabel 4.2 pada naskah penelitian. Setelah "
+        "mengikuti Hasil Uji. Setelah "
         "Anda menjalankan simulasi di bawah, angka hasilnya ikut ditempel "
         "pada model ini."
     )
@@ -297,7 +296,7 @@ def _langkah_pilih(st, luas_skenario: float, intensitas_skenario: float) -> Perc
     )
     st.caption(
         "Percobaan di atas adalah titik awal untuk dijelajahi, dinyatakan "
-        "sebagai kelipatan skenario naskah. Angkanya bukan penggolongan "
+        "sebagai kelipatan skenario Hasil Uji. Angkanya bukan penggolongan "
         "hujan maupun standar perencanaan."
     )
     return next(p for p in pilihan if p.kunci == kunci)
@@ -564,7 +563,7 @@ def _daftar_istilah(st, retensi_aktif: Keluaran) -> None:
     with st.expander("Cara membaca label status bukti"):
         st.markdown(
             "- **terukur** — diukur tim peneliti di laboratorium.\n"
-            "- **literatur** — dikutip dari pustaka yang dirujuk naskah.\n"
+            "- **literatur** — dikutip dari pustaka rujukan.\n"
             "- **model** atau **deterministik** — hasil hitungan dari "
             "masukan, bukan pengukuran.\n"
             "- **target** — nilai rancangan yang belum pernah diukur.\n"

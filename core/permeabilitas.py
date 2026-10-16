@@ -157,20 +157,20 @@ def pembanding_literatur() -> list[dict]:
             "nilai": 0.01,
             "satuan": "cm/detik",
             "sifat": "batas atas",
-            "sumber": "ACI Committee 522 (2020) via OUTPUT3 §1.1",
+            "sumber": "ACI Committee 522 (2020)",
         },
         {
             "nama": "Beton berpori agregat daur ulang berserat",
             "nilai": 0.574,
             "satuan": "cm/detik",
             "sifat": "batas bawah rentang",
-            "sumber": "Zhu et al. (2020) via OUTPUT3 §2.2",
+            "sumber": "Zhu et al. (2020)",
         },
         {
             "nama": "Beton berpori agregat daur ulang berserat",
             "nilai": 0.764,
             "satuan": "cm/detik",
             "sifat": "batas atas rentang",
-            "sumber": "Zhu et al. (2020) via OUTPUT3 §2.2",
+            "sumber": "Zhu et al. (2020)",
         },
     ]

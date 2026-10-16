@@ -148,7 +148,7 @@ RUPA_CADANGAN = Rupa(warna="#B0BEC5", tebal=0.45)
 TANAH_DASAR = {
     "nama": "Tanah dasar",
     "fungsi": (
-        "Konteks dari ilustrasi naskah (OUTPUT3 Gambar 4.7). Bukan salah satu "
+        "Konteks dari Hasil Uji. Bukan salah satu "
         "dari lima lapisan sistem pada Tabel 4.2."
     ),
     "sederhana": (
@@ -284,7 +284,7 @@ def _petunjuk(nama: str, fungsi: str, sederhana: str) -> str:
     if sederhana:
         isi += f"<br>{_bungkus(sederhana)}"
     if fungsi:
-        isi += f"<br><i>{_bungkus('Naskah: ' + fungsi)}</i>"
+        isi += f"<br><i>{_bungkus('Hasil Uji: ' + fungsi)}</i>"
     return isi + "<extra></extra>"
 
 
@@ -703,7 +703,7 @@ def uraian_teks(lapisan: list[dict], retensi_persen: float | None,
         r = rupa(lap["nama"])
         baris.append(
             f"{nomor}. **{lap['nama']}** — {r.sederhana or lap['fungsi']} "
-            f"*Naskah: {lap['fungsi']}*")
+            f"*Hasil Uji: {lap['fungsi']}*")
     baris += [
         "",
         f"Di bawahnya: **{TANAH_DASAR['nama']}** (konteks, bukan bagian dari "
@@ -757,7 +757,7 @@ def keterangan_tetes(retensi_persen: float | None) -> str:
         "retensi, mengikuti tingkat retensi skenario aktif. Perhitungan "
         "aplikasi hanya menentukan berapa banyak air yang tertahan; lewat "
         "jalur mana sisanya keluar tidak dihitung. Pipa digambar sebagai "
-        "jalur keluar karena itulah fungsinya menurut naskah."
+        "jalur keluar karena itulah fungsinya menurut Hasil Uji."
     )
 
 
@@ -832,7 +832,7 @@ def _kartu_lapisan(st, lapisan: list[dict], pilih: str) -> None:
     """Nama dan kegunaan lapisan yang sedang disorot."""
     if pilih == SEMUA:
         st.caption(
-            "Lima lapisan sistem mengikuti OUTPUT3 Tabel 4.2. Pilih salah "
+            "Lima lapisan sistem mengikuti Hasil Uji. Pilih salah "
             "satu di atas untuk membaca kegunaannya."
         )
         return
@@ -846,4 +846,4 @@ def _kartu_lapisan(st, lapisan: list[dict], pilih: str) -> None:
     st.markdown(f"**{lap['nama']}**")
     if r.sederhana:
         st.markdown(r.sederhana)
-    st.caption(f"Menurut naskah (OUTPUT3 Tabel 4.2): {lap['fungsi']}")
+    st.caption(f"Menurut Hasil Uji: {lap['fungsi']}")

@@ -72,27 +72,27 @@ class Besaran:
 # ═══════════════════════════════════════════════════════════════════════════
 
 RASIO_PENGIKAT_AGREGAT = Besaran(
-    3.0, "kg agregat per kg pengikat", "OUTPUT3 §3.3", TERUKUR,
+    3.0, "kg agregat per kg pengikat", "Hasil Uji", TERUKUR,
     "1 kg pengikat : 3 kg batu sirtu",
 )
 
 SUBSTITUSI_IPAL = Besaran(
-    15.0, "%", "OUTPUT3 §3.3", TERUKUR,
+    15.0, "%", "Hasil Uji", TERUKUR,
     "0,85 kg semen + 0,15 kg lumpur IPAL per kg pengikat",
 )
 
 FAKTOR_AIR_PENGIKAT = Besaran(
-    0.40, "-", "OUTPUT3 §3.3", TERUKUR,
+    0.40, "-", "Hasil Uji", TERUKUR,
     "±0,40 liter air per kg pengikat",
 )
 
-AGREGAT_UKURAN_MIN = Besaran(4.75, "mm", "OUTPUT3 §3.4.2", TERUKUR)
-AGREGAT_UKURAN_MAKS = Besaran(12.5, "mm", "OUTPUT3 §3.4.2", TERUKUR)
+AGREGAT_UKURAN_MIN = Besaran(4.75, "mm", "Hasil Uji", TERUKUR)
+AGREGAT_UKURAN_MAKS = Besaran(12.5, "mm", "Hasil Uji", TERUKUR)
 
 # Naskah tidak menyebut berat satuan. Berat benda uji justru memberi ~1.279
 # kg/m3 bila silinder benar-benar 150x300 mm — belum terkonfirmasi.
 BERAT_SATUAN_BETON = Besaran(
-    1850.0, "kg/m³", "tidak ada di naskah", ASUMSI,
+    1850.0, "kg/m³", "tidak ada di Hasil Uji", ASUMSI,
     "berat benda uji justru menyiratkan ~1.279 kg/m³; tinggi silinder belum dikonfirmasi",
 )
 
@@ -102,20 +102,20 @@ BERAT_SATUAN_BETON = Besaran(
 # Diuji umur 7 hari, dikonversi ke 14 hari. BUKAN 28 hari.
 # ═══════════════════════════════════════════════════════════════════════════
 
-UMUR_UJI_HARI = Besaran(7, "hari", "OUTPUT3 §4.2", TERUKUR)
-UMUR_KONVERSI_HARI = Besaran(14, "hari", "OUTPUT3 §4.2", TERUKUR)
+UMUR_UJI_HARI = Besaran(7, "hari", "Hasil Uji", TERUKUR)
+UMUR_KONVERSI_HARI = Besaran(14, "hari", "Hasil Uji", TERUKUR)
 
 LUAS_SILINDER = Besaran(
-    0.017671, "m²", "OUTPUT3 Persamaan 3.3", TERUKUR,
+    0.017671, "m²", "Hasil Uji", TERUKUR,
     "silinder Ø150 mm",
 )
 
 # Pembagi, bukan pengali: f'c(14) = f'c(7) / 0,879.
 FAKTOR_KONVERSI_7_KE_14 = Besaran(
-    0.879, "-", "OUTPUT3 Persamaan 4.2", ASUMSI,
+    0.879, "-", "Hasil Uji", ASUMSI,
     "TURUNAN MELINGKAR — Equation_Format_Reference.jpeg menuliskan "
     "FK = 15,00/13,19 ≈ 1,137 lalu memakainya untuk menghasilkan 15,00 MPa. "
-    "Naskah tidak menyitir sumber mana pun. Lihat ADR-005",
+    "Hasil Uji tidak menyitir sumber mana pun. Lihat ADR-005",
 )
 
 # Tabel faktor umur PBI 1971 (0,65 / 0,88 / 0,95 / 1,00) adalah rasio terhadap
@@ -133,7 +133,7 @@ BENDA_UJI_TEKAN = (
 )
 
 KUAT_TEKAN_7_HARI = Besaran(
-    13.19, "MPa", "OUTPUT3 Tabel 4.1", TERUKUR,
+    13.19, "MPa", "Hasil Uji", TERUKUR,
     "rerata tiga benda uji",
 )
 
@@ -141,7 +141,7 @@ KUAT_TEKAN_7_HARI = Besaran(
 # Nilai 14 hari di bawah dipertahankan sebagai rekam jejak, TIDAK dipakai sebagai
 # hasil utama, dan tidak boleh muncul di Abstrak atau kesimpulan (ADR-005).
 KUAT_TEKAN_14_HARI = Besaran(
-    15.00, "MPa", "OUTPUT3 Tabel 4.1", ASUMSI,
+    15.00, "MPa", "Hasil Uji", ASUMSI,
     "TIDAK DIPAKAI sebagai hasil utama — turunan melingkar dari faktor yang "
     "justru diturunkan dari nilai ini. Diturunkan dari MODEL ke ASUMSI",
 )
@@ -159,9 +159,9 @@ UJI_RETENSI = (
 )
 
 RETENSI_RERATA = Besaran(
-    40.0, "%", "OUTPUT3 Tabel 4.3 (terkoreksi)", TERUKUR,
+    40.0, "%", "Hasil Uji", TERUKUR,
     "nilai terkoreksi sesuai keputusan penulis 30 Agustus 2026 dan sudah "
-    "diterapkan ke naskah. Rerata aritmetik ketiga uji (40,0 / 41,0 / 39,0) "
+    "diterapkan ke Hasil Uji. Rerata aritmetik ketiga uji (40,0 / 41,0 / 39,0) "
     "dan perbandingan 400 ml terhadap 1.000 ml keduanya memberi 40,0%. "
     "Nilai 39,7% pada pelaporan sebelumnya adalah ketidaksesuaian penyalinan",
 )
@@ -169,16 +169,16 @@ RETENSI_RERATA = Besaran(
 # Nilai lama dipertahankan sebagai rekam jejak, BUKAN untuk dipakai menghitung.
 RETENSI_RERATA_PELAPORAN_LAMA = 39.7
 
-RETENSI_SIMPANGAN_BAKU = Besaran(1.0, "%", "OUTPUT3 §4.4", TERUKUR)
-RETENSI_KOEF_VARIASI = Besaran(2.5, "%", "OUTPUT3 §4.4", TERUKUR)
+RETENSI_SIMPANGAN_BAKU = Besaran(1.0, "%", "Hasil Uji", TERUKUR)
+RETENSI_KOEF_VARIASI = Besaran(2.5, "%", "Hasil Uji", TERUKUR)
 
 TARGET_REDUKSI_LIMPASAN_MIN = Besaran(
-    35.0, "%", "OUTPUT3 §4.4", ASUMSI,
-    "dasar target belum dirujuk — [AUTHOR INPUT REQUIRED] di naskah",
+    35.0, "%", "Hasil Uji", ASUMSI,
+    "dasar target belum dirujuk — [AUTHOR INPUT REQUIRED] di Hasil Uji",
 )
 TARGET_REDUKSI_LIMPASAN_MAKS = Besaran(
-    55.0, "%", "OUTPUT3 §4.4", ASUMSI,
-    "dasar target belum dirujuk — [AUTHOR INPUT REQUIRED] di naskah",
+    55.0, "%", "Hasil Uji", ASUMSI,
+    "dasar target belum dirujuk — [AUTHOR INPUT REQUIRED] di Hasil Uji",
 )
 
 
@@ -205,12 +205,12 @@ TARGET_REDUKSI_LIMPASAN_MAKS = Besaran(
 PERM_METODE = "Constant head (tinggi tekan tetap)"
 PERM_METODE_SUMBER = "konfirmasi tim eksperimen, 2026-08-30"
 
-PERM_TEBAL_SAMPEL = Besaran(2.0, "cm", "OUTPUT3 §4.5", TERUKUR)
+PERM_TEBAL_SAMPEL = Besaran(2.0, "cm", "Hasil Uji", TERUKUR)
 PERM_LUAS_PENAMPANG = Besaran(
-    225.0, "cm²", "OUTPUT3 §4.5", TERUKUR,
+    225.0, "cm²", "Hasil Uji", TERUKUR,
     "benda uji persegi 15 × 15 cm — bukan silinder",
 )
-PERM_TINGGI_TEKANAN = Besaran(6.0, "cm", "OUTPUT3 §4.5", TERUKUR)
+PERM_TINGGI_TEKANAN = Besaran(6.0, "cm", "Hasil Uji", TERUKUR)
 
 # Gradien hidraulik i = h/L = 3,0 (turunan, bukan masukan terpisah).
 PERM_GRADIEN_HIDRAULIK = Besaran(
@@ -220,7 +220,7 @@ PERM_GRADIEN_HIDRAULIK = Besaran(
 
 PERM_KECEPATAN_ALIRAN = Besaran(
     5.0, "cm/detik",
-    "OUTPUT3 §4.5; konfirmasi tim eksperimen 2026-08-30 — "
+    "Hasil Uji; konfirmasi tim eksperimen 2026-08-30 — "
     "catatan pengukuran mentah tidak tersedia",
     TERUKUR,
     "diukur sebagai v = s/t — jarak tempuh air menembus benda uji dibagi waktu "
@@ -230,28 +230,28 @@ PERM_KECEPATAN_ALIRAN = Besaran(
 )
 
 PERM_DEBIT = Besaran(
-    1125.0, "cm³/detik", "OUTPUT3 Persamaan 4.9", MODEL,
+    1125.0, "cm³/detik", "Hasil Uji", MODEL,
     "debit volumetrik Q = v × A; turunan dari kecepatan terukur",
 )
 
 PERMEABILITAS = Besaran(
-    1.667, "cm/detik", "OUTPUT3 Persamaan 4.10", TERUKUR,
+    1.667, "cm/detik", "Hasil Uji", TERUKUR,
     "hasil uji constant head; dihitung dari kecepatan terukur dan geometri "
     "benda uji melalui k = Q·L/(A·h), setara k = v·L/h. Nilai tidak diubah",
 )
 
 # Satu-satunya pembanding permeabilitas yang benar-benar disitir naskah.
 PERM_BETON_KONVENSIONAL = Besaran(
-    0.01, "cm/detik", "ACI Committee 522 (2020) via OUTPUT3 §1.1", LITERATUR,
+    0.01, "cm/detik", "ACI Committee 522 (2020)", LITERATUR,
     "batas atas; perkerasan konvensional bersifat impermeabel",
 )
 
 PERM_ZHU_MIN = Besaran(
-    0.574, "cm/detik", "Zhu et al. (2020) via OUTPUT3 §2.2", LITERATUR,
+    0.574, "cm/detik", "Zhu et al. (2020)", LITERATUR,
     "beton berpori agregat daur ulang berserat, porositas rancangan 15%",
 )
 PERM_ZHU_MAKS = Besaran(
-    0.764, "cm/detik", "Zhu et al. (2020) via OUTPUT3 §2.2", LITERATUR,
+    0.764, "cm/detik", "Zhu et al. (2020)", LITERATUR,
 )
 
 
@@ -259,8 +259,8 @@ PERM_ZHU_MAKS = Besaran(
 # POROSITAS — target rancangan, TIDAK PERNAH DIUKUR (OUTPUT3 §4.3)
 # ═══════════════════════════════════════════════════════════════════════════
 
-POROSITAS_TARGET_MIN = Besaran(18.0, "%", "OUTPUT3 Tabel 4.2", TARGET)
-POROSITAS_TARGET_MAKS = Besaran(25.0, "%", "OUTPUT3 Tabel 4.2", TARGET)
+POROSITAS_TARGET_MIN = Besaran(18.0, "%", "Hasil Uji", TARGET)
+POROSITAS_TARGET_MAKS = Besaran(25.0, "%", "Hasil Uji", TARGET)
 
 # Naskah §4.3: "Draf belum memuat hasil pengukuran porositas benda uji."
 POROSITAS_TERUKUR = None
@@ -303,20 +303,20 @@ LAPISAN_SISTEM = (
 
 CO2_PER_TON_SEMEN_MIN = Besaran(
     0.8, "ton CO₂/ton semen",
-    "Scrivener et al. (2018); Habert et al. (2020) via OUTPUT3 §1.1", LITERATUR,
+    "Scrivener et al. (2018); Habert et al. (2020)", LITERATUR,
 )
 CO2_PER_TON_SEMEN_MAKS = Besaran(
     0.9, "ton CO₂/ton semen",
-    "Scrivener et al. (2018); Habert et al. (2020) via OUTPUT3 §1.1", LITERATUR,
+    "Scrivener et al. (2018); Habert et al. (2020)", LITERATUR,
 )
 
 CO2_PER_TON_IPAL = Besaran(
-    0.05, "ton CO₂/ton", "tidak ada di naskah", ASUMSI,
+    0.05, "ton CO₂/ton", "tidak ada di Hasil Uji", ASUMSI,
     "karbon tertanam lumpur IPAL diperkirakan sangat kecil, belum bersumber",
 )
 
 PANGSA_EMISI_SEMEN_GLOBAL = Besaran(
-    7.5, "%", "Scrivener et al. (2018) via OUTPUT3 §1.1", LITERATUR,
+    7.5, "%", "Scrivener et al. (2018)", LITERATUR,
     "rentang 7–8% emisi CO₂ global",
 )
 
@@ -326,16 +326,16 @@ PANGSA_EMISI_SEMEN_GLOBAL = Besaran(
 # ═══════════════════════════════════════════════════════════════════════════
 
 AMBANG_LALU_LINTAS_RINGAN = Besaran(
-    5.0, "MPa", "Govedarica et al. (2022) via OUTPUT3 §2.2", LITERATUR,
+    5.0, "MPa", "Govedarica et al. (2022)", LITERATUR,
     "ambang minimum kuat tekan untuk aplikasi lalu lintas ringan",
 )
 
 NATARAJA_KUAT_TEKAN_MIN = Besaran(
-    16.0, "MPa", "Nataraja et al. (2023) via OUTPUT3 §4.2", LITERATUR,
+    16.0, "MPa", "Nataraja et al. (2023)", LITERATUR,
     "beton berpori tanpa substitusi, umur 7 hari",
 )
 NATARAJA_KUAT_TEKAN_MAKS = Besaran(
-    35.5, "MPa", "Nataraja et al. (2023) via OUTPUT3 §4.2", LITERATUR,
+    35.5, "MPa", "Nataraja et al. (2023)", LITERATUR,
 )
 
 
@@ -343,14 +343,14 @@ NATARAJA_KUAT_TEKAN_MAKS = Besaran(
 # SKALA HIDROLOGI — OUTPUT3 §4.6
 # ═══════════════════════════════════════════════════════════════════════════
 
-SKALA_LUAS_ACUAN = Besaran(1000.0, "m²", "OUTPUT3 §4.6", TERUKUR)
-SKALA_INTENSITAS_ACUAN = Besaran(50.0, "mm/jam", "OUTPUT3 §4.6", TERUKUR)
+SKALA_LUAS_ACUAN = Besaran(1000.0, "m²", "Hasil Uji", TERUKUR)
+SKALA_INTENSITAS_ACUAN = Besaran(50.0, "mm/jam", "Hasil Uji", TERUKUR)
 
 # 1.000 m2 x 50 mm/jam = 50.000 L/jam yang JATUH; 40% darinya = 20.000 L
 # yang TERTAHAN. Naskah menandai perlunya kejelasan ini.
-SKALA_AIR_JATUH = Besaran(50000.0, "liter/jam", "OUTPUT3 §4.6", MODEL,
+SKALA_AIR_JATUH = Besaran(50000.0, "liter/jam", "Hasil Uji", MODEL,
                           "turunan: luas × intensitas")
-SKALA_AIR_TERTAHAN = Besaran(20000.0, "liter/jam", "OUTPUT3 §4.6", MODEL,
+SKALA_AIR_TERTAHAN = Besaran(20000.0, "liter/jam", "Hasil Uji", MODEL,
                              "turunan: 40% dari air yang jatuh, bukan total curah hujan")
 
 
@@ -406,16 +406,16 @@ class Dihapus:
 
 DIHAPUS = {
     "ambang_permeabilitas_045": Dihapus(
-        "Tidak ada di naskah. Satu-satunya nilai ACI 522 yang disitir adalah "
+        "Tidak ada di Hasil Uji. Satu-satunya nilai ACI 522 yang disitir adalah "
         "<0,01 cm/dtk untuk beton konvensional.",
         (r"0[,.]45\s*cm",),
     ),
     "target_permeabilitas_060": Dihapus(
-        "Tidak ada di naskah.",
+        "Tidak ada di Hasil Uji.",
         (r"0[,.]60\s*cm", r"0[,.]75\s*cm"),
     ),
     "aci_522_014": Dihapus(
-        "Sitasi keliru — angka ini tidak ada di naskah.",
+        "Sitasi keliru — angka ini tidak ada di Hasil Uji.",
         (r"0[,.]14\s*cm", r"ACI[^\n]{0,24}0[,.]14"),
     ),
     "sni_min_10_mpa": Dihapus(
@@ -435,13 +435,13 @@ DIHAPUS = {
         (r"20[,.]5\s*MPa", r"0[,.]35\s*MPa"),
     ),
     "hukuman_ipal_di_atas_15": Dihapus(
-        "Naskah hanya menguji satu tingkat substitusi."),
+        "Hasil Uji hanya menguji satu tingkat substitusi."),
     "porositas_lapisan_zeolit_025": Dihapus(
         "Tanpa sumber; diganti neraca massa antar lapisan.",
         (r"porositas lapisan[^\n]{0,20}0[,.]25",),
     ),
     "optimasi_material_85": Dihapus(
-        "Tidak ada di versi naskah mana pun. Naskah menyebut 25% (§1.1) dan "
+        "Tidak ada di versi Hasil Uji. Hasil Uji menyebut 25% (§1.1) dan "
         "SUBJECT3 menyebut 35%, keduanya juga belum terbukti.",
         (r"optimasi material[^\n]{0,16}85", r"85\s*%[^\n]{0,16}optimasi"),
     ),

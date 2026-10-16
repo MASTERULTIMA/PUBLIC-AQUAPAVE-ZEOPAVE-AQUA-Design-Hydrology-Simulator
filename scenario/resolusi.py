@@ -91,12 +91,12 @@ def resolusi(sk: Skenario) -> dict[OutputID, Keluaran]:
     )
     hasil[OutputID.MIX_TOTAL_MASS] = tersedia(
         OutputID.MIX_TOTAL_MASS, mix["massa_total_kg"], "kg",
-        StatusBukti.DETERMINISTIK, "core/komposisi.py · OUTPUT3 §3.3",
+        StatusBukti.DETERMINISTIK, "core/komposisi.py · Hasil Uji",
         "Neraca massa tertutup; berat satuan berstatus asumsi.",
     )
     hasil[OutputID.IPAL_MASS] = tersedia(
         OutputID.IPAL_MASS, mix["massa_ipal_kg"], "kg",
-        StatusBukti.DETERMINISTIK, "core/komposisi.py · OUTPUT3 §3.3",
+        StatusBukti.DETERMINISTIK, "core/komposisi.py · Hasil Uji",
         "Substitusi memindahkan massa di dalam pengikat.",
     )
 
@@ -157,7 +157,7 @@ def resolusi(sk: Skenario) -> dict[OutputID, Keluaran]:
         )
         hasil[OutputID.RUNOFF] = tersedia(
             OutputID.RUNOFF, sk_hidro["air_tertahan_liter"], "liter",
-            StatusBukti.DETERMINISTIK, "core/hidrologi.py · OUTPUT3 §4.6",
+            StatusBukti.DETERMINISTIK, "core/hidrologi.py · Hasil Uji",
             "Ekstrapolasi skala dari retensi skala laboratorium, bukan "
             "pengukuran lapangan.",
         )

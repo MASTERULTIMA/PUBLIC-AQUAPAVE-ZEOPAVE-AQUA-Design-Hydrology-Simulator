@@ -502,7 +502,7 @@ class EstimasiTetapSekunder(unittest.TestCase):
         Selisih itu bukti provenansi faktor belum selesai, jadi ditampilkan.
         """
         teks = "\n".join(c.value for c in self.at.caption)
-        self.assertIn("naskah mencatat 15.00 MPa", teks)
+        self.assertIn("Hasil Uji mencatat 15.00 MPa", teks)
         self.assertIn("belum", teks)
 
     def test_faktor_umur_tinggal_di_lapisan_tampilan(self):

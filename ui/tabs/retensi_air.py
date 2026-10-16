@@ -210,7 +210,7 @@ def _basis_retensi(st, k: Keluaran) -> tuple[float | None, bool]:
             float(k.nilai), 0.1, key="retensi_dari_ukur",
             help=(
                 f"Berangkat dari hasil ukur konfigurasi acuan: {k.nilai:.1f}% "
-                "(OUTPUT3 Tabel 4.3, terkoreksi). Menggesernya mengubah angka "
+                "(Hasil Uji). Menggesernya mengubah angka "
                 "ini menjadi asumsi Anda sendiri."
             ),
         )

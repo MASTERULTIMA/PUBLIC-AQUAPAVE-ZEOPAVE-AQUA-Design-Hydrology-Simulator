@@ -193,7 +193,7 @@ def _faktor_emisi(st, sk, acuan_aktif, kunci):
         co2_ipal = st.number_input(
             "CO₂ per ton lumpur IPAL (ton CO₂/ton)", 0.0, 0.3, sk.co2_per_ton_ipal, 0.01,
             disabled=acuan_aktif,
-            help="ASUMSI — naskah tidak menyebut faktor ini.",
+            help="ASUMSI — Hasil Uji tidak menyebut faktor ini.",
             key=kunci("co2_per_ton_ipal"),
         )
         total_pengikat = st.number_input(

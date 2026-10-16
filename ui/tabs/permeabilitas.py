@@ -104,7 +104,7 @@ def _pemilih_mode(st) -> bool:
         help=(
             "Aktif: memakai benda uji yang benar-benar diuji laboratorium "
             "(persegi 15 × 15 cm, L = 2 cm, h = 6 cm, Q = 1.125 cm³/detik), "
-            "sehingga tab ini mereproduksi OUTPUT3 §4.5. "
+            "sehingga tab ini mereproduksi Hasil Uji. "
             "Nonaktif: mode perhitungan bebas untuk benda uji Anda sendiri."
         ),
     )
@@ -112,7 +112,7 @@ def _pemilih_mode(st) -> bool:
         komp_catatan.acuan(
             st,
             "**Konfigurasi Acuan Penelitian** — benda uji persegi 15 × 15 cm "
-            "(A = 225 cm²), L = 2 cm, h = 6 cm. Mereproduksi OUTPUT3 §4.5."
+            "(A = 225 cm²), L = 2 cm, h = 6 cm. Hasil Uji."
         )
     else:
         st.info("**Mode perhitungan kustom** — masukkan geometri dan data Anda sendiri.")
@@ -284,7 +284,7 @@ def _panel_hasil(
 
     st.caption(
         "Tidak ada badge lulus/gagal di sini. Ambang 0,45 cm/dtk dan target "
-        "0,60 cm/dtk yang dipakai versi sebelumnya tidak ada di naskah mana pun "
+        "0,60 cm/dtk yang dipakai versi sebelumnya tidak ada di Hasil Uji "
         "dan telah dihapus (ADR-001). Yang ditampilkan di bawah adalah "
         "pembanding dari pustaka yang benar-benar disitir."
     )

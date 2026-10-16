@@ -47,7 +47,7 @@ from ..components import warnings as komp_catatan
 CATATAN_AGREGAT = (
     "**Agregat pada campuran ini adalah batu sirtu saja.** Hebel dan zeolit "
     "bukan bahan campuran beton, melainkan media retensi pada **lapisan "
-    "terpisah** di bawah beton poros (OUTPUT3 Tabel 4.2, §3.4.2). Pemilah "
+    "terpisah** di bawah beton poros (Hasil Uji). Pemilah "
     "fraksi agregat menjadi sirtu/hebel/zeolit pada versi sebelumnya "
     "memodelkan sistem material yang berbeda dari yang diteliti, dan telah "
     "dihapus."
@@ -71,7 +71,7 @@ KEPEMILIKAN_ACUAN_KINERJA = (
 )
 
 BANTUAN_BERAT_SATUAN = (
-    "ASUMSI — tidak disebut naskah. Massa benda uji justru "
+    "ASUMSI — tidak disebut Hasil Uji. Massa benda uji justru "
     "menyiratkan sekitar 1.280 kg/m³. Dapat diubah untuk melihat "
     "pengaruhnya terhadap neraca massa."
 )
@@ -99,7 +99,7 @@ def render(st, substitusi_ipal_persen: float, faktor_air_pengikat: float) -> Non
     gaya.judul_bagian(st, "Optimizer Mix Design — ZEOPAVE-AQUA")
     gaya.pengantar(st, PENGANTAR)
     st.caption(
-        "Neraca massa rancangan campuran beton poros mengikuti OUTPUT3 §3.3: "
+        "Neraca massa rancangan campuran beton poros mengikuti Hasil Uji: "
         "rasio pengikat : agregat = 1 : 3, tanpa pasir. Perhitungan dilakukan "
         "core/komposisi.py."
     )

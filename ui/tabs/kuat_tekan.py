@@ -74,7 +74,7 @@ CATATAN_FAKTOR_UMUR = (
     "Status bukti: **asumsi** — provenansi primer tabel ini **belum "
     "tertelusuri**. Tidak ada standar yang tercatat sebagai sumbernya di "
     "dalam penelitian ini. Nilainya menyerupai tabel PBI 1971 yang banyak "
-    "direproduksi, tetapi naskah tidak menyitirnya (ADR-005). Tabel ini alat "
+    "direproduksi, tetapi Hasil Uji tidak menyitirnya (ADR-005). Tabel ini alat "
     "bantu pembaca, bukan model: keluarannya estimasi, bukan hasil pengukuran."
 )
 
@@ -218,7 +218,7 @@ def _masukan_pengujian(st) -> tuple[bool, float, list[float], list[float]]:
         "Pakai data uji penelitian",
         value=True,
         help=(
-            "Aktif: ketiga benda uji penelitian apa adanya (OUTPUT3 Tabel 4.1), "
+            "Aktif: ketiga benda uji penelitian apa adanya (Hasil Uji), "
             "silinder Ø150 mm, umur 7 hari. "
             "Nonaktif: kalkulator bebas untuk benda uji Anda sendiri — hasilnya "
             "adalah hitungan Anda, bukan hasil pengukuran penelitian."
@@ -299,7 +299,7 @@ def _panel_data_uji(
             f"simpangan baku ±{ring['simpangan_baku']:.2f} MPa &nbsp;·&nbsp; "
             f"CV {ring['cv_persen']:.1f}%"
         )
-        keterangan = "DATA KONFIGURASI ACUAN — OUTPUT3 Tabel 4.1"
+        keterangan = "DATA KONFIGURASI ACUAN — Hasil Uji"
     else:
         label = (
             f"Rerata f'c dari beban yang Anda masukkan — simpangan baku "
@@ -341,7 +341,7 @@ def _panel_estimasi_umur(st, fc_rerata: float, pakai_data_penelitian: bool) -> N
             st,
             "Provenansi primer faktor umur di bawah **belum tertelusuri**. "
             "Nilainya menyerupai tabel PBI 1971 yang banyak direproduksi, "
-            "tetapi naskah penelitian ini tidak menyitirnya. Keluaran di sini "
+            "tetapi Hasil Uji ini tidak menyitirnya. Keluaran di sini "
             "adalah ESTIMASI dan tidak boleh dilaporkan sebagai hasil "
             "pengukuran (ADR-005)."
         )
@@ -393,7 +393,7 @@ def _catatan_estimasi_naskah(st) -> None:
         / FAKTOR_UMUR[umur] * FAKTOR_UMUR[umur_naskah]
     )
     st.caption(
-        f"Catatan: naskah mencatat {b14.nilai:.2f} MPa pada umur "
+        f"Catatan: Hasil Uji mencatat {b14.nilai:.2f} MPa pada umur "
         f"{umur_naskah} hari ({b14.label_status}), sementara penskalaan nilai "
         f"kanonik {akses.nilai('KUAT_TEKAN_7_HARI'):.2f} MPa dengan tabel "
         f"faktor yang sama memberi {dari_tabel:.2f} MPa. Selisih ini belum "

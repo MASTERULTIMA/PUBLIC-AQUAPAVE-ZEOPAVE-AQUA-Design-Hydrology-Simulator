@@ -121,5 +121,5 @@ def rentang_faktor_emisi_semen() -> dict:
         "min": 0.8,
         "maks": 0.9,
         "satuan": "ton CO₂ per ton semen",
-        "sumber": "Scrivener et al. (2018); Habert et al. (2020) via OUTPUT3 §1.1",
+        "sumber": "Scrivener et al. (2018); Habert et al. (2020)",
     }
